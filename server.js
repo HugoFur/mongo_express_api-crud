@@ -1,7 +1,7 @@
 //  initial settings
 const express = require('express');
 const mongoose = require('mongoose');
-const Candidate = require('./models/Candidate');
+const candidate = require('./models/Candidate');
 const app = express();
 const port = 3000;
 
@@ -16,38 +16,15 @@ app.use(express.urlencoded(
 app.use(express.json());
 
 
+//  routes
+const candidateRouter = require('./routes/candidateRoutes');
+app.use('/Candidate', candidateRouter);
+
+
 //  initial route
 app.get('/', (req, res) => {
     res.json({ message: 'Hi' });
 });
-
-
-//  data create
-app.post('/candidate', async (req, res) => {
-
-    const {name, party, salary, approved} = req.body; // destructuring assignment
-
-    if(!name){
-        res.status(422).json({error: 'Name is required!'}) //  validation
-    }
-
-    const candidate = {
-        name,
-        party,
-        salary,
-        approved
-    };
-
-    try {
-
-        await Candidate.create(Candidate);
-        res.status(201).json({message: 'Candidate was created!'});
-
-    } catch (error) {
-        res.status(500).json({error: error});
-    }
-});
-
 
 
 // db connection
