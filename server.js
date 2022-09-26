@@ -1,7 +1,6 @@
 //  initial settings
 const express = require('express');
 const mongoose = require('mongoose');
-const candidate = require('./models/Candidate');
 const app = express();
 const port = 3000;
 
